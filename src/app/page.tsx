@@ -33,7 +33,6 @@ interface WeatherData {
   wind: {
     speed: number;
     deg: number;
-    gust?: number; // Optional, since it's not present in this example
   };
   clouds: {
     all: number;
@@ -52,65 +51,20 @@ interface WeatherData {
   cod: number;
 }
 
-// Example usage:
-const weatherData: WeatherData = {
-  coord: {
-    lon: -114.0853,
-    lat: 51.0501
-  },
-  weather: [
-    {
-      id: 801,
-      main: "Clouds",
-      description: "few clouds",
-      icon: "02d"
-    }
-  ],
-  base: "stations",
-  main: {
-    temp: 295.81,
-    feels_like: 295.33,
-    temp_min: 294.59,
-    temp_max: 296.34,
-    pressure: 1021,
-    humidity: 46,
-    sea_level: 1021,
-    grnd_level: 897
-  },
-  visibility: 10000,
-  wind: {
-    speed: 7.72,
-    deg: 160
-  },
-  clouds: {
-    all: 20
-  },
-  dt: 1725131739,
-  sys: {
-    type: 2,
-    id: 2094668,
-    country: "CA",
-    sunrise: 1725108558,
-    sunset: 1725157445
-  },
-  timezone: -21600,
-  id: 5913490,
-  name: "Calgary",
-  cod: 200
-};
 
 export default function Home() {
+  
   const { isLoading, error, data } = useQuery<WeatherData>(
-    'repoData',
+    'weatherData',
     async () => {
       const { data } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=Calgary&APPID=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=2`
+        `https://api.openweathermap.org/data/2.5/forecast?q=calgary&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`
       );
       return data;
     }
   );
 
-  const firstData = data?.list[0];
+  //const firstData = data?.list[0];
 
   console.log("data:", data);
 
@@ -130,7 +84,7 @@ export default function Home() {
        <section>
         <div>
           <h2 className="flex gap-1 text-2xl text 2xl items-end">
-            <p>{format(parseISO(firstData?.dt_txt ?? ""), "EEEE")}</p>
+            {/*<p>{format(parseISO(firstData?.dt_txt ?? ""), "EEEE")}</p>*/}
           </h2>
           <div></div>
         </div>
