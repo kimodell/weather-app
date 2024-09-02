@@ -7,6 +7,7 @@ import axios from "axios";
 import { format, parseISO } from "date-fns";
 import Container from "./components/Container";
 import { convertKelvinToCelsius } from "./utils/convertKelvinToCelsius";
+import WeatherIcon from "./components/WeatherIcon";
 
 
 type WeatherData = {
@@ -126,8 +127,8 @@ export default function Home() {
               </div>
               {/* time and weather icons */}
               <div className="flex gap-10 sm:gap-16 overflow-x-auto w-full justify-between pr-3">
-                {data?.list.map((data, index)=>
-                  <div 
+                {data?.list.map((data, index) =>
+                  <div
                     key={index}
                     className="flex flex-col justify-between gap-2 items-center text-xs font-semibold"
                   >
@@ -135,6 +136,9 @@ export default function Home() {
                     <p className="whitespace-nowrap">
                       {format(parseISO(data.dt_txt), "h:mm a")}
                     </p>
+
+                    <WeatherIcon iconName={data.weather[0].icon}/>
+
                     <p>
                       {convertKelvinToCelsius(data?.main.temp ?? 0)}°
                     </p>
