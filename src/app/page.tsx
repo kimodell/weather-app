@@ -7,7 +7,7 @@ import axios from "axios";
 import { format, parseISO } from "date-fns";
 
 
-interface WeatherData {
+type WeatherData = {
   cod: string;
   message: number;
   cnt: number;
@@ -58,9 +58,7 @@ interface WeatherData {
     sunrise: number;
     sunset: number;
   };
-}
-
-
+};
 
 export default function Home() {
 
@@ -68,13 +66,13 @@ export default function Home() {
     'weatherData',
     async () => {
       const { data } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=calgary&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`
+        `https://api.openweathermap.org/data/2.5/forecast?q=calgary&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`
       );
       return data;
     }
   );
 
-  //const firstData = data?.list[0];
+  const todaysData = data?.list[0];
 
   console.log("data:", data);
 
@@ -94,7 +92,8 @@ export default function Home() {
         <section>
           <div>
             <h2 className="flex gap-1 text-2xl text 2xl items-end">
-              {/*<p>{format(parseISO(firstData?.dt_txt ?? ""), "EEEE")}</p>*/}
+              {/*Display day of the week from data. Convert to date object from string, display empty string if date is null or undefined, else display date in full name format */}
+              <p>{format(parseISO(todaysData?.dt_txt ?? ""), "EEEE")}</p>
             </h2>
             <div></div>
           </div>
