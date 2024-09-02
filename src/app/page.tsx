@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
+import Container from "./components/Container";
 
 
 type WeatherData = {
@@ -96,7 +97,11 @@ export default function Home() {
               <p>{format(parseISO(todaysData?.dt_txt ?? ""), "EEEE")}</p>
               <p className="text-lg">({format(parseISO(todaysData?.dt_txt ?? ""), "dd.MM.yyy")})</p>
             </h2>
-            <div></div>
+            <Container className="gap=10 px-6 items-center">
+              <div className="flex flex-col px-4">
+
+              </div>
+            </Container>
           </div>
         </section>
       </main>
