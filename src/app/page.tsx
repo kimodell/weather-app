@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
 import Container from "./components/Container";
+import { convertKelvinToCelsius } from "./utils/convertKelvinToCelsius";
 
 
 type WeatherData = {
@@ -99,7 +100,11 @@ export default function Home() {
             </h2>
             <Container className="gap=10 px-6 items-center">
               <div className="flex flex-col px-4">
+                <span className = "text-5xl">
+                {/*Use helped function to display converted temp, if temp null or undefined, display default temp*/}
+                {convertKelvinToCelsius(todaysData?.main.temp ?? 302.17)}°
 
+                </span>
               </div>
             </Container>
           </div>
