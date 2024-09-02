@@ -100,11 +100,27 @@ export default function Home() {
             </h2>
             <Container className="gap=10 px-6 items-center">
               <div className="flex flex-col px-4">
-                <span className = "text-5xl">
-                {/*Use helped function to display converted temp, if temp null or undefined, display default temp*/}
-                {convertKelvinToCelsius(todaysData?.main.temp ?? 302.17)}°
-
+                <span className="text-5xl">
+                  {/*Use helped function to display converted temp, if temp null or undefined, display default temp*/}
+                  {convertKelvinToCelsius(todaysData?.main.temp ?? 302.17)}°
                 </span>
+                <p className="text-xs space-a-1 whitespace-nowrap">
+                  <span>Feels like: </span>
+                  <span>
+                    {convertKelvinToCelsius(todaysData?.main.feels_like ?? 0)}°
+                  </span>
+                </p>
+                <p className="text-xs space-x-2">
+                  <span>
+                    {convertKelvinToCelsius(todaysData?.main.temp_min ?? 0)}
+                    °↓{" "}
+                  </span>
+                  <span>
+                    {" "}
+                    {convertKelvinToCelsius(todaysData?.main.temp_max ?? 0)}°
+                    °↑
+                  </span>
+                </p>
               </div>
             </Container>
           </div>
