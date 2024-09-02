@@ -91,14 +91,16 @@ export default function Home() {
     <div className="flex flex-col gap-4 bg-gray-100 min-h-screen">
       <Navbar />
       <main className="px-3 max-w-7xl mx-auto flax flex-col gap-9 w-full pb-10 pt-4">
-        <section>
-          <div>
+        {/* todays data */}
+        <section className="space-y-4">
+          <div className="space-y-2">
             <h2 className="flex gap-1 text-2xl text 2xl items-end">
               {/*Display day of the week from data. Convert to date object from string, display empty string if date is null or undefined, else display date in full name format */}
               <p>{format(parseISO(todaysData?.dt_txt ?? ""), "EEEE")}</p>
               <p className="text-lg">({format(parseISO(todaysData?.dt_txt ?? ""), "dd.MM.yyy")})</p>
             </h2>
             <Container className="gap=10 px-6 items-center">
+              {/* temperature */}
               <div className="flex flex-col px-4">
                 <span className="text-5xl">
                   {/*Use helped function to display converted temp, if temp null or undefined, display default temp*/}
@@ -117,10 +119,27 @@ export default function Home() {
                   </span>
                   <span>
                     {" "}
-                    {convertKelvinToCelsius(todaysData?.main.temp_max ?? 0)}°
+                    {convertKelvinToCelsius(todaysData?.main.temp_max ?? 0)}
                     °↑
                   </span>
                 </p>
+              </div>
+              {/* time and weather icons */}
+              <div className="flex gap-10 sm:gap-16 overflow-x-auto w-full justify-between pr-3">
+                {data?.list.map((data, index)=>
+                  <div 
+                    key={index}
+                    className="flex flex-col justify-between gap-2 items-center text-xs font-semibold"
+                  >
+                    {/*Display time from data. Convert to time object from string */}
+                    <p className="whitespace-nowrap">
+                      {format(parseISO(data.dt_txt), "h:mm a")}
+                    </p>
+                    <p>
+                      {convertKelvinToCelsius(data?.main.temp ?? 0)}°
+                    </p>
+                  </div>
+                )}
               </div>
             </Container>
           </div>
