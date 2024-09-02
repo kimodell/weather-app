@@ -94,6 +94,7 @@ export default function Home() {
             <h2 className="flex gap-1 text-2xl text 2xl items-end">
               {/*Display day of the week from data. Convert to date object from string, display empty string if date is null or undefined, else display date in full name format */}
               <p>{format(parseISO(todaysData?.dt_txt ?? ""), "EEEE")}</p>
+              <p className="text-lg">({format(parseISO(todaysData?.dt_txt ?? ""), "dd.MM.yyy")})</p>
             </h2>
             <div></div>
           </div>
