@@ -5,6 +5,8 @@ import { MdOutlineLocationOn, MdWbSunny, MdMyLocation } from "react-icons/md";
 import SearchBox from "./SearchBox";
 import axios from "axios";
 import { error } from "console";
+import { placeAtom } from "../atom";
+import { useAtom } from "jotai";
 
 type Props = {};
 
@@ -16,6 +18,8 @@ export default function Navbar({ }: Props) {
   const [error, setError] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [place, setPlace] = useAtom(placeAtom);
+
 
   async function handleInputChange(value: string) {
     setCity(value);
@@ -52,6 +56,7 @@ export default function Navbar({ }: Props) {
     }
     else{
       setError("");
+      setPlace(city);
       setShowSuggestions(false);
     }
   }

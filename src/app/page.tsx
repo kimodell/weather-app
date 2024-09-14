@@ -13,6 +13,9 @@ import WeatherDetails from "./components/WeatherDetails";
 import { metersToKilometers } from "./utils/metersToKilometers";
 import { convertWindSpeed } from "./utils/convertWindSpeed";
 import ForecastWeatherDetail from "./components/ForecastWeatherDetail";
+import { useAtom } from "jotai";
+import { placeAtom } from "./atom";
+import { useEffect } from "react";
 
 
 type WeatherData = {
@@ -70,15 +73,21 @@ type WeatherData = {
 
 export default function Home() {
 
-  const { isLoading, error, data } = useQuery<WeatherData>(
+  const [place, setPlace] = useAtom(placeAtom);
+
+  const { isLoading, error, data, refetch } = useQuery<WeatherData>(
     'weatherData',
     async () => {
       const { data } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=calgary&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${place}&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`
       );
       return data;
     }
   );
+
+  useEffect(() => {
+    refetch();
+  }, [place, refetch]);
 
   const todaysData = data?.list[0];
 
