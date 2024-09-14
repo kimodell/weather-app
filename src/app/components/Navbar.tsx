@@ -5,10 +5,10 @@ import { MdOutlineLocationOn, MdWbSunny, MdMyLocation } from "react-icons/md";
 import SearchBox from "./SearchBox";
 import axios from "axios";
 import { error } from "console";
-import { placeAtom } from "../atom";
+import { loadingCityAtom, placeAtom } from "../atom";
 import { useAtom } from "jotai";
 
-type Props = { location?: string };
+type Props = { location?: string; };
 
 
 
@@ -19,6 +19,7 @@ export default function Navbar({ location }: Props) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [place, setPlace] = useAtom(placeAtom);
+  const [_, setLoadingCity] = useAtom(loadingCityAtom);
 
 
   async function handleInputChange(value: string) {
@@ -49,15 +50,20 @@ export default function Navbar({ location }: Props) {
     setShowSuggestions(false);
   }
 
-  function handleSubmitSearch (e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmitSearch(e: React.FormEvent<HTMLFormElement>) {
+    setLoadingCity(true);
     e.preventDefault();
-    if(suggestions.length == 0) {
+    if (suggestions.length == 0) {
       setError("Location not found");
+      setLoadingCity(false);
     }
-    else{
+    else {
       setError("");
-      setPlace(city);
-      setShowSuggestions(false);
+      setTimeout(() => {
+        setLoadingCity(false);
+        setPlace(city);
+        setShowSuggestions(false);
+      }, 500);
     }
   }
 
@@ -66,7 +72,7 @@ export default function Navbar({ location }: Props) {
       <div className="h-[80px] w-full flex justify-between items-center max-w-7xl px-3 mx-auto">
         <div className="flex items-center justify-center gap-2">
           <h2 className="text-gray-500 text-3xl">Weather</h2>
-          <MdWbSunny className="text-3xl mt-1 text-yellow-300"/>
+          <MdWbSunny className="text-3xl mt-1 text-yellow-300" />
         </div>
         {/* */}
         <section className="flex gap-2 items-center">
