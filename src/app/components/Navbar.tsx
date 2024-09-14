@@ -56,13 +56,13 @@ export default function Navbar({ location }: Props) {
     if (suggestions.length == 0) {
       setError("Location not found");
       setLoadingCity(false);
-    }
-    else {
+    } else {
       setError("");
       setTimeout(() => {
         setLoadingCity(false);
         setPlace(city);
         setShowSuggestions(false);
+        setCity("");
       }, 500);
     }
   }
